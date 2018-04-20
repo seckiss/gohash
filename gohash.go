@@ -4,7 +4,6 @@ import (
 	"crypto/md5"
 	"encoding/binary"
 	"fmt"
-	"strings"
 )
 
 func Hash80(s string) string {
@@ -23,30 +22,4 @@ func Hash63(s string) int64 {
 		panic(fmt.Sprintf("gohash.Hash63 u out of range. u=%d, s=%s", u, s))
 	}
 	return int64(u)
-}
-
-// strip 'http://' or 'https://' or '//' from url
-// also remove the trailing slash
-func StripHttp(s string) string {
-	s = strings.TrimSpace(s)
-	if strings.HasSuffix(s, "/") {
-		s = s[:len(s)-1]
-	}
-	if strings.HasPrefix(s, "http://") {
-		s = s[7:]
-	}
-	if strings.HasPrefix(s, "https://") {
-		s = s[8:]
-	}
-	if strings.HasPrefix(s, "//") {
-		s = s[2:]
-	}
-	return s
-}
-
-func IsHttpStripped(s string) bool {
-	return !(strings.HasSuffix(s, "/") ||
-		strings.HasPrefix(s, "http://") ||
-		strings.HasPrefix(s, "https://") ||
-		strings.HasPrefix(s, "//"))
 }
